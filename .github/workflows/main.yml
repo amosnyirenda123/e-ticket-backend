@@ -1,0 +1,41 @@
+name: Laravel CI/CD (Test + Docker Build/Push)
+
+on:
+  push:
+    branches: [ main ]  
+
+jobs:
+  test-and-build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Docker
+        uses: docker/setup-buildx-action@v3
+
+      - name: Copy .env
+        run: cp .env.example .env
+
+      - name: Set up PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: 8.2
+
+      - name: Install dependencies
+        run: |
+          composer install --no-interaction --prefer-dist
+          php artisan key:generate
+
+      - name: Run Laravel tests
+        run: php artisan test
+
+      - name: Log in to Docker Hub
+        run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
+
+      - name: Build Docker image
+        run: docker build -t ${{ secrets.DOCKER_USERNAME }}/e-ticket-backend.
+
+      - name: Push Docker image
+        run: docker push ${{ secrets.DOCKER_USERNAME }}/e-ticket-backend
