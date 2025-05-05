@@ -3,19 +3,16 @@
 namespace Tests\Feature\Auth;
 
 use App\Models\User;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Hash;
 use Tests\TestCase;
 
 class AuthTest extends TestCase
 {
-    use RefreshDatabase;
-
     protected function setUp(): void
     {
         parent::setUp();
         
-        // Create test user matching your exact schema
+        // Manually create test user to avoid factory issues
         User::create([
             'Name' => 'Test User',
             'Email' => 'test@example.com',
@@ -72,13 +69,11 @@ class AuthTest extends TestCase
 
     public function test_authenticated_user_can_logout()
     {
-        // First login to get token
         $token = $this->postJson('/api/login', [
             'email' => 'test@example.com',
             'password' => 'password123'
         ])->json('access_token');
 
-        // Then logout with the token
         $response = $this->withHeaders([
             'Authorization' => 'Bearer ' . $token
         ])->postJson('/api/logout');
