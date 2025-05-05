@@ -17,7 +17,6 @@ COPY entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
 # Installer les dépendances PHP
 RUN composer install
-
 RUN php artisan key:generate
 
 
