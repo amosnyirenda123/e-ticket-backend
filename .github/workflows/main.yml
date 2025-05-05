@@ -1,4 +1,4 @@
-name: Laravel CI/CD (Test + Docker Build/Push)
+name: Laravel CI / CD (Test + Docker Build/Push)
 
 on:
   push:
