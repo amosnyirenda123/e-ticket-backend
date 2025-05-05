@@ -1,7 +1,7 @@
 name: Laravel CI / CD (Test + Docker Build/Push)
 
 on:
-  push:
+  push: 
     branches: main 
 
 jobs:
