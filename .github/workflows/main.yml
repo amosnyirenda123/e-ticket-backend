@@ -39,4 +39,4 @@ jobs:
             -f backend/laravel/Dockerfile \
             -t ${{ secrets.DOCKER_USERNAME }}/e-ticket-backend:latest \
             --push \
-            backend/laravel
+        ./laravel
