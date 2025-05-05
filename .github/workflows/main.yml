@@ -2,7 +2,7 @@ name: Laravel CI/CD (Test + Docker Build/Push)
 
 on:
   push:
-    branches: [ main ]  
+    branches: [ main ]  # Adjust to your main branch
 
 jobs:
   test-and-build:
@@ -15,15 +15,12 @@ jobs:
       - name: Set up Docker
         uses: docker/setup-buildx-action@v3
 
-      - name: Copy .env
-        run: cp .env.example .env
-
       - name: Set up PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: 8.2
+          php-version: 8.3
 
-      - name: Install dependencies
+      - name: Install PHP dependencies
         run: |
           composer install --no-interaction --prefer-dist
           php artisan key:generate
