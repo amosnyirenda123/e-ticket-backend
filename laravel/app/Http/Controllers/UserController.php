@@ -149,7 +149,6 @@ class UserController extends Controller
         $user->update([
             'Password' => Hash::make($validated['new_password']),
         ]);
-
         return response()->json([
             'message' => 'Password updated successfully',
         ]);
